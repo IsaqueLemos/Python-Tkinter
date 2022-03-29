@@ -148,7 +148,7 @@ tela.geometry('500x200')
 tela.resizable(False, False)
 tela['bg'] = '#121212'
 
-Button(text='Formulário', font='arial 18', fg='white', bg='#D40026', command=cadastrar).place(x=80, y=70)
-Button(text='Dados Salvos', font='arial 18', fg='white', bg='#D40026', command=dados_salvos).place(x=250, y=70)
+Button(text='Formulário', font='arial 18', fg='white', bg='#F2CB07', command=cadastrar).place(x=80, y=70)
+Button(text='Dados Salvos', font='arial 18', fg='white', bg='#F2CB07', command=dados_salvos).place(x=250, y=70)
 
 tela.mainloop()
