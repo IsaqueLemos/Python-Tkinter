@@ -17,9 +17,13 @@ def validar_nascimento(legenda, condicao, data):
     else:
         legenda.configure(fg='red')
 
-def salvar():
+def salvar(nome, cpf, matricula, data):
     arquivo = open('dados.txt', 'a')
     dados = []
+    arquivo.write(f'{nome}%{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:11]}%{matricula}%{data[:2]}/{data[2:4]}/{data[4:8]}\n')
+    arquivo.close()
+
+def coletar_dados():
 
     ### Recolhendo dados
     nome = en_nome.get()
@@ -32,6 +36,7 @@ def salvar():
     c_cpf = len(cpf) == 11 and cpf.isdigit()
     c_matricula = len(matricula) < 20 and matricula.isdigit()
     c_data = len(data) == 8 and data.isdigit()
+    c_data2 = int(data[:2]) < 32 and int(data[2:4]) < 13 and int(data[4:8]) < 2023
     
     ### Validação de dados inseridos
     validar(lb_nome, c_nome)
@@ -39,16 +44,9 @@ def salvar():
     validar(lb_matricula, c_matricula)
     validar_nascimento(lb_data, c_data, data)
 
-    ### Adicionando arquivos num arquivo de texto
-    if c_nome and c_cpf and c_matricula and c_data:
-        dados.append(nome)
-        dados.append(f'{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:11]}')
-        dados.append(matricula)
-        dados.append(f'{data[:2]}/{data[2:4]}/{data[4:8]}')
-        
-        arquivo.write('%'.join(dados))
-        arquivo.write('\n')
-        arquivo.close()
+    ### Salvando dados
+    if c_nome and c_cpf and c_matricula and c_data and c_data2:
+        salvar(nome, cpf, matricula, data)
         janela.destroy()
     else:
         janela.bell()
@@ -140,7 +138,7 @@ def cadastrar():
     en_data.place(x= 85, y=290)
 
     ### Botao
-    Button(janela, text='Cadastrar', bg='#E0A819', fg='whitesmoke', font='arial 14', command=salvar).place(x= 325, y=340)
+    Button(janela, text='Cadastrar', bg='#E0A819', fg='whitesmoke', font='arial 14', command=coletar_dados).place(x= 325, y=340)
 
     ### Manter na tela
     janela.mainloop()
